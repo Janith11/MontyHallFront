@@ -1,0 +1,100 @@
+<div class="container">
+
+  <h3>Plase slect a door</h3>
+  <button type="button" class="btn btn-success mb-4" (click)="reset()">Reset</button>
+  <div class="alert alert-success" role="alert" *ngIf="youWon">
+    You Won!
+  </div>
+  <div class="alert alert-danger" role="alert" *ngIf="youLoose">
+    You Loose! Try Again
+  </div>
+  <div class="row">
+
+    <div class="col-md-4 col-sm-6">
+      <div class="card">
+        <img [src]="DoorOneimageUrl" alt="Card Image">
+        <h5 class="card-header">Door 1</h5>
+        <div class="card-body">
+          <button type="button" class="btn btn-primary" [disabled]="disableButtons" (click)="selectedDoor(1)">Select Door 1</button>
+          <p *ngIf="selectedDoorOne" class="mt-1">You selected this door</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+      <div class="card">
+        <img [src]="DoorTwoimageUrl" alt="Card Image">
+        <h5 class="card-header">Door 2</h5>
+        <div class="card-body">
+          <button type="button" class="btn btn-primary" [disabled]="disableButtons" (click)="selectedDoor(2)">Select Door 2</button>
+          <p *ngIf="selectedDoorTwo" class="mt-1">You selected this door</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6">
+      <div class="card">
+        <img [src]="DoorThreeimageUrl" alt="Card Image">
+        <h5 class="card-header">Door 3</h5>
+        <div class="card-body">
+          <button type="button" class="btn btn-primary" [disabled]="disableButtons" (click)="selectedDoor(3)">Select Door 3</button>
+          <p *ngIf="selectedDoorThree" class="mt-1">You selected this door</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row mt-5">
+    <div class="card">
+      <div class="card-header">
+        Simulation
+      </div>
+      <div class="card-body">
+        <form [formGroup]="simulationForm" >
+          <div class="row">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="noOfGames">Number of Games:</label>
+              <input type="number" id="noOfGames" class="form-control" formControlName="noOfGames">
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label for="changeTHeDoor">Change the door</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="doorChange" id="changeDoorTrue" value="true" formControlName="doorChange">
+              <label class="form-check-label" for="changeDoorTrue">
+                 Yes
+              </label>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="doorChange" id="changeDoorFalse" value="false" formControlName="doorChange">
+              <label class="form-check-label" for="changeDoorFalse">
+                No
+              </label>
+            </div>
+          </div>
+          <button class="btn btn-success btn-sm" [disabled]="simulationForm.invalid" (click)="submit()">Submit</button>
+        </div>
+        </form>
+
+        <div class="row mt-3" *ngIf="result">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Win %</th>
+                <th scope="col">Losses %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{simulateWins}}</td>
+                <td>{{simulateLooses}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>

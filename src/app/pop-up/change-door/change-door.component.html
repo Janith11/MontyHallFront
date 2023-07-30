@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title">Do you want to change the selected door?</h4>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label">Selected Door:{{selectedDoorNo}}</label>
+    </div>
+    </form>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="onNo()">No</button>
+  <button type="button" class="btn btn-success" (click)="onYes()">Yes</button>
+</div>

@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <h4 class="modal-title">Plase Enter your Name</h4>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="form-group">
+      <label for="recipient-name" class="col-form-label">userName:</label>
+      <input type="text" class="form-control" id="recipient-name" name="user"  [(ngModel)]="userName">
+    </div>
+    </form>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="onSave()">Save changes</button>
+</div>
