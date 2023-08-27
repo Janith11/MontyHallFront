@@ -4,6 +4,7 @@ import { ApiService } from '../api.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { NewUserComponent } from '../new-user/new-user.component';
 import { Router } from '@angular/router';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 
 @Component({
@@ -20,27 +21,25 @@ export class HomeComponent implements OnInit {
     private api:ApiService,
     private modelService:NgbModal,
     private modalService: NgbModal,
-    private router: Router) { }
+    private router: Router,
+    ) { }
   ngOnInit(): void {
     //this.modal = this.modalRef;
   }
 
   onPlay(){
     this.openModal()
-    // if(this.user.userName == ''){
-    //   this.modelService.open(this.model.nativeElement);
-    // }
-    //this.modelRef =
   }
 
   openModal() {
     const modalRef = this.modalService.open(NewUserComponent);
-    modalRef.componentInstance.recipient = '@mdo';
-    modalRef.componentInstance.message = '';
+    //modalRef.componentInstance.recipient = '';
+    //modalRef.componentInstance.message = '';
 
     modalRef.result.then(
       (result) => {
         console.log('Modal closed with result:', result);
+        this.user.userName=result
         this.router.navigate(['/simulation']);
 
 

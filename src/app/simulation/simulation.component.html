@@ -1,6 +1,6 @@
 <div class="container">
 
-  <h3>Plase slect a door</h3>
+  <h3 class="" style="text-align: center;">Plase slect a door</h3>
   <button type="button" class="btn btn-success mb-4" (click)="reset()">Reset</button>
   <div class="alert alert-success" role="alert" *ngIf="youWon">
     You Won!
@@ -16,7 +16,7 @@
         <h5 class="card-header">Door 1</h5>
         <div class="card-body">
           <button type="button" class="btn btn-primary" [disabled]="disableButtons" (click)="selectedDoor(1)">Select Door 1</button>
-          <p *ngIf="selectedDoorOne" class="mt-1">You selected this door</p>
+          <p *ngIf="addClassDoorNo == 1" class="mt-1 text-primary">You selected this door</p>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
         <h5 class="card-header">Door 2</h5>
         <div class="card-body">
           <button type="button" class="btn btn-primary" [disabled]="disableButtons" (click)="selectedDoor(2)">Select Door 2</button>
-          <p *ngIf="selectedDoorTwo" class="mt-1">You selected this door</p>
+          <p *ngIf="addClassDoorNo == 2" class="mt-1 text-primary">You selected this door</p>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
         <h5 class="card-header">Door 3</h5>
         <div class="card-body">
           <button type="button" class="btn btn-primary" [disabled]="disableButtons" (click)="selectedDoor(3)">Select Door 3</button>
-          <p *ngIf="selectedDoorThree" class="mt-1">You selected this door</p>
+          <p *ngIf="addClassDoorNo == 3" class="mt-1 text-primary">You selected this door</p>
         </div>
       </div>
     </div>
@@ -75,7 +75,11 @@
               </label>
             </div>
           </div>
-          <button class="btn btn-success btn-sm" [disabled]="simulationForm.invalid" (click)="submit()">Submit</button>
+          <div class="row">
+            <div class="col-md-3">
+              <button class="btn btn-success btn-sm" [disabled]="simulationForm.invalid" (click)="submit()">Submit</button>
+            </div>
+          </div>
         </div>
         </form>
 

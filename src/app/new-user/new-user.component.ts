@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserInfoService } from '../user-info.service';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-new-user',
@@ -8,27 +9,34 @@ import { UserInfoService } from '../user-info.service';
   styleUrls: ['./new-user.component.css']
 })
 export class NewUserComponent implements OnInit {
-
-  constructor(public activeModal: NgbActiveModal, private userInfo:UserInfoService) { }
-  userName ='kamal'
+  
+  constructor
+    (
+    public activeModal: NgbActiveModal,
+    private userInfo:UserInfoService
+    ) { }
+  userName = ''
   ngOnInit(): void {
+    this.getUserName()
   }
-  // onCancel(){
-
-  // }
-  // onSave(){
-
-  // }
-
 
   onCancel() {
     this.activeModal.dismiss('Cancel clicked');
   }
 
   onSave() {
-    this.userInfo.userName = 'username'
-
-    localStorage.setItem('userName',this.userName)
+    this.userInfo.userName = this.userName
+    console.log(this.userInfo.userName)
+    //this.userInfo.userName =this.userName
     this.activeModal.close(this.userName);
+  }
+
+  getUserName(){
+    const storedUserName = this.userInfo.userName;
+    if (storedUserName !== null) {
+      this.userName = storedUserName;
+    } else {
+      this.userName = 'User';
+    }
   }
 }

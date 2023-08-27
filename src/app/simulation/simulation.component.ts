@@ -3,6 +3,7 @@ import { ApiService } from '../api.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ChangeDoorComponent } from '../pop-up/change-door/change-door.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserInfoService } from '../user-info.service';
 
 @Component({
   selector: 'app-simulation',
@@ -13,6 +14,8 @@ export class SimulationComponent implements OnInit {
   public simulationForm!:FormGroup;
   public winDoorNo:number= 0
   public selectedDoorNo:number= 0
+  public addClassDoorNo:number=0
+  public addClassWinDoorNo:number=0
   public switchedDoorNo:number=0
   public otherDoorNo:number = 0
   public missingDoorNo:number=0
@@ -37,7 +40,9 @@ export class SimulationComponent implements OnInit {
   constructor(
     private apiService:ApiService,
     private modalService: NgbModal,
-    private formBuilder:FormBuilder) { }
+    private formBuilder:FormBuilder,
+    private userInfo:UserInfoService
+    ) { }
 
   ngOnInit(): void {
     this.simulationForm = this.formBuilder.group({
@@ -46,29 +51,29 @@ export class SimulationComponent implements OnInit {
     });
     this.getRandomCarBox()
 
-
   }
 
   getRandomCarBox(){
     this.apiService.getRandomCarBox().subscribe(data=>{
       this.winDoorNo = data
-      console.log(this.winDoorNo)
+      console.log('car door '+this.winDoorNo)
     })
   }
 
   selectedDoor(selectedDoorNo:number){
     this.selectedDoorNo =selectedDoorNo
+    this.addClassDoorNo=this.selectedDoorNo
     console.log(selectedDoorNo)
     this.selectOtherDooerNo()
     if(this.otherDoorNo == 1){
       //this.selectedDoorOne =true
-      this.DoorOneimageUrl = this.OpenedDoor
+      this.DoorOneimageUrl = this.DoorWIthGoat
     }else if(this.otherDoorNo == 2){
       //this.selectedDoorTwo =true
-      this.DoorTwoimageUrl  = this.OpenedDoor
+      this.DoorTwoimageUrl  = this.DoorWIthGoat
     }else{
-      this.selectedDoorThree =true
-      this.DoorThreeimageUrl  = this.OpenedDoor
+      //this.selectedDoorThree =true
+      this.DoorThreeimageUrl  = this.DoorWIthGoat
     }
     this.openOptionToChangeDoor(selectedDoorNo)
     this.disableButtons = true
@@ -83,8 +88,10 @@ export class SimulationComponent implements OnInit {
         (result) => {
 
           this.switchNumbers()
+          this.addClassDoorNo= this.switchedDoorNo
           if(this.switchedDoorNo == this.winDoorNo){
-            this.youWon= true
+            //this.youWon= true
+            this.userInfo.showSuccess('Congratulation! You won the car');
             if(this.switchedDoorNo == 1){
               this.DoorOneimageUrl = this.DoorWithCar
             }else if(this.switchedDoorNo == 2){
@@ -101,7 +108,8 @@ export class SimulationComponent implements OnInit {
             }
           }
           else{
-            this.youLoose= true
+            //this.youLoose= true
+            this.userInfo.showError('You loose the car, Plase try again!')
             if(this.switchedDoorNo == 1){
               this.DoorOneimageUrl = this.DoorWIthGoat
             }else if(this.switchedDoorNo == 2){
@@ -125,7 +133,8 @@ export class SimulationComponent implements OnInit {
           this.missingDoor()
           console.log(this.selectedDoorNo+' '+this.winDoorNo+ ' '+this.otherDoorNo)
           if(this.selectedDoorNo == this.winDoorNo){
-            this.youWon= true
+            //this.youWon= true
+            this.userInfo.showSuccess('Congratulation! You won the car');
             if(this.selectedDoorNo == 1){
               this.DoorOneimageUrl = this.DoorWithCar
             }else if(this.selectedDoorNo == 2){
@@ -142,7 +151,8 @@ export class SimulationComponent implements OnInit {
             }
           }
           else{
-            this.youLoose= true
+            //this.youLoose= true
+            this.userInfo.showError('You loose the car, Plase try again!')
             if(this.selectedDoorNo == 1){
               this.DoorOneimageUrl = this.DoorWIthGoat
             }else if(this.selectedDoorNo == 2){
@@ -202,6 +212,9 @@ export class SimulationComponent implements OnInit {
     this.disableButtons=false
     this.youWon= false
     this.youLoose= false
+    this.addClassDoorNo=0
+    this.addClassWinDoorNo=0
+    this.getRandomCarBox()
   }
 
   stringToBoolean(value: string): boolean {
@@ -209,12 +222,14 @@ export class SimulationComponent implements OnInit {
   }
 
   submit(){
+
     this.result = false;
     console.log(this.simulationForm.value)
     var IsDoorChanges = this.stringToBoolean(this.simulationForm.value.doorChange)
     var noOfGames =this.simulationForm.value.noOfGames
 
-
+    console.log('IsDoorChanges'+IsDoorChanges)
+    console.log('noOfGames'+noOfGames)
     //console.log()
     this.apiService.getTheSimulationResult(noOfGames,IsDoorChanges).subscribe((data:[])=>{
       console.log(data)

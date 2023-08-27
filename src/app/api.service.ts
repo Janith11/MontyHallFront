@@ -30,6 +30,7 @@ export class ApiService {
   getTheSimulationResult(noOfGames:number,doorChanged:boolean):Observable<any>{
     const params= new HttpParams().set('numberOfSimulations',noOfGames).set('changeDoor',doorChanged)
     return this.http.get<any>(this.endPoint, {params:params});
+    //return this.http.get<any>(this.endPoint+'?numberOfSimulations='+noOfGames+'changeDoor='+doorChanged);
 
   }
 }
